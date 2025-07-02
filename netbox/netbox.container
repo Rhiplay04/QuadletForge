@@ -1,0 +1,28 @@
+[Container]
+ContainerName=netbox
+Image=docker.io/netboxcommunity/netbox:latest
+User=unit:root
+EnvironmentFile=env/netbox.env
+HealthCmd=curl -f http://localhost:8080  || exit 1
+HealthStartPeriod=90s
+HealthTimeout=3s
+HealthInterval=15s
+Volume=netbox-configuration:/etc/netbox/config:ro,z
+Volume=netbox-media-files:/opt/netbox/netbox/media:rw
+Volume=netbox-reports-files:/opt/netbox/netbox/reports:rw
+Volume=netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+# Ports müssen explizit gemacht werden, falls Netbox Ports exposed
+PublishPort=8080:8080
+Network=netbox-app.network
+Pod=netbox.pod
+
+[Unit]
+Description=Netbox Main Application
+After=postgres.service redis.service redis-cache.service
+Requires=postgres.service redis.service redis-cache.service
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

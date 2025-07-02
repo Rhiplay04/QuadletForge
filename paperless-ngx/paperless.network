@@ -1,0 +1,5 @@
+[Network]
+Subnet=192.168.50.0/24
+Gateway=192.168.50.1
+Label=paperless-ngx-network
+

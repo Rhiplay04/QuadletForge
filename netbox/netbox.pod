@@ -1,0 +1,12 @@
+[Unit]
+Description=Pod for Netbox
+
+[Pod]
+PodName=netbox
+Network=netbox.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

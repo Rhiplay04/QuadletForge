@@ -1,0 +1,28 @@
+[Container]
+ContainerName=netbox-worker
+Image=docker.io/netboxcommunity/netbox:latest
+User=unit:root
+EnvironmentFile=env/netbox.env
+Exec=/opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py rqworker
+HealthCmd=ps -aux | grep -v grep | grep -q rqworker || exit 1
+HealthStartPeriod=20s
+HealthTimeout=3s
+HealthInterval=15s
+Volume=netbox-configuration:/etc/netbox/config:ro,z
+Volume=netbox-media-files:/opt/netbox/netbox/media:rw
+Volume=netbox-reports-files:/opt/netbox/netbox/reports:rw
+Volume=netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+Pod=netbox.pod
+Network=netbox-app.network
+
+
+[Unit]
+Description=Netbox Worker
+Requires=netbox.service
+After=netbox.service
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

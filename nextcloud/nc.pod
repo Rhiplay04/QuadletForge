@@ -1,0 +1,12 @@
+[Unit]
+Description=Pod for Nextcloud
+
+[Pod]
+PodName=nextcloud
+Network=nextcloud.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

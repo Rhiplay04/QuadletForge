@@ -1,0 +1,10 @@
+[Container]
+ContainerName=redis-ngx
+Image=docker.io/redis:8
+Volume=redisdata-ngx:/data
+Network=paperless.network
+Pod=paperless.pod
+[Service]
+Restart=always
+[Install]
+WantedBy=multi-user.target

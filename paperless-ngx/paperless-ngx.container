@@ -1,0 +1,24 @@
+[Container]
+ContainerName=paperless-ngx
+Image=ghcr.io/paperless-ngx/paperless-ngx:latest
+Volume=data-ngx:/usr/src/paperless/data
+Volume=media-ngx:/usr/src/paperless/media
+Volume=./export:/home/podman/.config/containers/systemd/export
+Volume=./consume:/home/podman/.config/containers/systemd/consume
+PublishPort=9999:8000
+Environment=PAPERLESS_REDIS=redis://redis-ngx:6379
+Environment=PAPERLESS_DBHOST=postgres-ngx
+Environment=POSTGRES_DB=paperless
+Environment=POSTGRES_USER=paperless
+Environment=POSTGRES_PASSWORD=paperless
+#Optional
+#EnvironmentFile=docker-compose.env
+#Use of secrets recommended
+Network=paperless.network
+Pod=paperless.pod
+[Service]
+Restart=always
+[Install]
+WantedBy=multi-user.target
+[Unit]
+Requires=postgres-ngx.service redis-ngx.service

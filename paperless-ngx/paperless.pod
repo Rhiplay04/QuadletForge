@@ -1,0 +1,9 @@
+[Unit]
+Description=Pod for Paperless-ngx
+[Pod]
+PodName=paperless-ngx
+Network=paperless.network
+[Service]
+Restart=always
+[Install]
+WantedBy=multi-user.target
